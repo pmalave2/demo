@@ -24,7 +24,7 @@ public interface RackMapper {
   RackEntity entityToEntity(RackEntity entity);
 
   @Named("getWarehouseId")
-  default Long getMessageDate(WarehouseEntity source) {
+  default Long getId(WarehouseEntity source) {
     if (Objects.isNull(source)) return null;
 
     return source.getId();
