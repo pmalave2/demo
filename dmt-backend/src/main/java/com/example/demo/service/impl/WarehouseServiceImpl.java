@@ -33,10 +33,16 @@ public class WarehouseServiceImpl implements WarehouseService {
   }
 
   @Override
+  public WarehouseDTO readById(Long id) {
+    return mapper.entityToDto(warehouseRepository.getReferenceById(id));
+  }
+
+  @Override
   public WarehouseDTO update(Long id, WarehouseUpdateDTO dto) {
     var entity = warehouseRepository.getReferenceById(id);
     entity.setFamily(dto.getFamily());
     entity.setSize(dto.getSize());
+    entity.setClient(dto.getClient());
 
     return mapper.entityToDto(warehouseRepository.save(entity));
   }
@@ -78,4 +84,5 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     return result;
   }
+
 }

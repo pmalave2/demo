@@ -18,7 +18,4 @@ public class WarehouseCreateDTO extends WarehouseUpdateDTO {
   @UUID
   @NotEmpty
   private String uuid;
-
-  @NotEmpty
-  private String client;
 }

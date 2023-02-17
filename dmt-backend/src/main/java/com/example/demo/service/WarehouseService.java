@@ -10,6 +10,8 @@ public interface WarehouseService {
 
   List<WarehouseDTO> read();
 
+  WarehouseDTO readById(Long id);
+
   WarehouseDTO update(Long id, WarehouseUpdateDTO dto);
 
   void delete(Long id);

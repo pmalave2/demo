@@ -7,6 +7,7 @@ import com.example.demo.service.WarehouseService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,22 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class WarehouseController {
   private final WarehouseService service;
 
+  @CrossOrigin
   @PostMapping
   public WarehouseDTO create(@RequestBody @Validated WarehouseCreateDTO dto) {
     return service.create(dto);
   }
 
+  @CrossOrigin
   @GetMapping
   public List<WarehouseDTO> read() {
     return service.read();
   }
 
+  @CrossOrigin
+  @GetMapping(path = "/{id}")
+  public WarehouseDTO readById(@PathVariable(required = true) Long id) {
+    return service.readById(id);
+  }
+
+  @CrossOrigin
   @PutMapping(path = "/{id}")
   public WarehouseDTO update(
       @PathVariable(required = true) Long id, @RequestBody @Validated WarehouseUpdateDTO dto) {
     return service.update(id, dto);
   }
 
+  @CrossOrigin
   @DeleteMapping(path = "/{id}")
   public void delete(@PathVariable(required = true) Long id) {
     service.delete(id);

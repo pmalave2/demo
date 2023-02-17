@@ -8,6 +8,7 @@ import com.example.demo.service.RackService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RackController {
   private final RackService service;
 
+  @CrossOrigin
   @PostMapping
-  public RackDTO create(@RequestBody @Validated RackCreateDTO dto) throws NoCompatibleRackException {
+  public RackDTO create(@RequestBody @Validated RackCreateDTO dto)
+      throws NoCompatibleRackException {
     return service.create(dto);
   }
 
+  @CrossOrigin
   @GetMapping
   public List<RackDTO> read() {
     return service.read();
@@ -35,7 +39,8 @@ public class RackController {
 
   @PutMapping(path = "/{id}")
   public RackDTO update(
-      @PathVariable(required = true) Long id, @RequestBody @Validated RackUpdateDTO dto) throws NoCompatibleRackException {
+      @PathVariable(required = true) Long id, @RequestBody @Validated RackUpdateDTO dto)
+      throws NoCompatibleRackException {
     return service.update(id, dto);
   }
 

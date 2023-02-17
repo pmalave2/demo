@@ -2,6 +2,7 @@ package com.example.demo.controller.dto;
 
 import com.example.demo.entity.WarehouseEntity.Family;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class WarehouseUpdateDTO {
+  @NotEmpty
+  private String client;
+
   @NotNull
   private Family family;
 

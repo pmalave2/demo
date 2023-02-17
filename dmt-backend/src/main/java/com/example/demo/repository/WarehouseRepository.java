@@ -7,6 +7,6 @@ import com.example.demo.entity.WarehouseEntity;
 
 public interface WarehouseRepository extends JpaRepository<WarehouseEntity, Long> {
 
-  @EntityGraph(value = "WarehouseEntity.racks")
+  @EntityGraph(attributePaths = "racks")
   WarehouseEntity getReferenceById(Long id);
 }
