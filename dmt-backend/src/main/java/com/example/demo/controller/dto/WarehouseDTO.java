@@ -12,5 +12,5 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class WarehouseDTO extends WarehouseCreateDTO {
-  private Long id;
+  private String id;
 }

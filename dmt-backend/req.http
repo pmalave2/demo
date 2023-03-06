@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "uuid": "{{$guid}}",
   "type": "C",
-  "warehouseId": 1
+  "warehouseId": "64061ac04ddbf87b3026cba7"
 }
 
 ###
@@ -24,7 +24,7 @@ Content-Type: application/json
 {
   "uuid": "{{$guid}}",
   "type": "B",
-  "warehouseId": 1
+  "warehouseId": "64061ac04ddbf87b3026cba7"
 }
 
 ###
@@ -34,7 +34,7 @@ Content-Type: application/json
 {
   "uuid": "{{$guid}}",
   "type": "D",
-  "warehouseId": 1
+  "warehouseId": "64061ac04ddbf87b3026cba7"
 }
 
 ###
@@ -49,5 +49,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8082/api/warehouses/1/permutate HTTP/1.1
+GET http://localhost:8082/api/warehouses/64061ac04ddbf87b3026cba7/permutate HTTP/1.1
 Content-Type: application/json

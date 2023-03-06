@@ -12,7 +12,7 @@ public interface RackService {
 
   List<RackDTO> read();
 
-  RackDTO update(Long id, RackUpdateDTO dto) throws NoCompatibleRackException;
+  RackDTO update(String id, RackUpdateDTO dto) throws NoCompatibleRackException;
 
-  void delete(Long id);
+  void delete(String id);
 }

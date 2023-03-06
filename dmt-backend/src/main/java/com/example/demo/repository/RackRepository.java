@@ -1,11 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.RackEntity;
+import java.util.List;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface RackRepository extends JpaRepository<RackEntity, Long> {
-  @EntityGraph(attributePaths = "warehouse")
-  RackEntity getReferenceById(Long id);
+public interface RackRepository extends MongoRepository<RackEntity, String> {
+  List<RackEntity> findAllByWarehouseId(String id);
 }

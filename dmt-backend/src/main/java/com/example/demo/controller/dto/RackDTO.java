@@ -12,5 +12,5 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class RackDTO extends RackCreateDTO {
-  private Long id;
+  private String id;
 }

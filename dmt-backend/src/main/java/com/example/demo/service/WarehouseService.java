@@ -10,11 +10,11 @@ public interface WarehouseService {
 
   List<WarehouseDTO> read();
 
-  WarehouseDTO readById(Long id);
+  WarehouseDTO readById(String id);
 
-  WarehouseDTO update(Long id, WarehouseUpdateDTO dto);
+  WarehouseDTO update(String id, WarehouseUpdateDTO dto);
 
-  void delete(Long id);
+  void delete(String id);
 
-  List<List<String>> permutate(Long id);
+  List<List<String>> permutate(String id);
 }

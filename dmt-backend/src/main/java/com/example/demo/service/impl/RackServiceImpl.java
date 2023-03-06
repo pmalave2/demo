@@ -6,6 +6,8 @@ import com.example.demo.controller.dto.RackUpdateDTO;
 import com.example.demo.entity.RackEntity;
 import com.example.demo.entity.WarehouseEntity;
 import com.example.demo.exception.NoCompatibleRackException;
+import com.example.demo.exception.NoFoundRackException;
+import com.example.demo.exception.NoFoundWarehouseException;
 import com.example.demo.mapper.RackMapper;
 import com.example.demo.repository.RackRepository;
 import com.example.demo.repository.WarehouseRepository;
@@ -25,13 +27,16 @@ public class RackServiceImpl implements RackService {
   @Override
   public RackDTO create(RackCreateDTO dto) throws NoCompatibleRackException {
     var entity = mapper.dtoToEntity(dto);
-    var entityWarehouse = warehouseRepository.getReferenceById(dto.getWarehouseId());
+    var entityWarehouseOptional = warehouseRepository.findById(dto.getWarehouseId());
+
+    if (!entityWarehouseOptional.isPresent()) throw new NoFoundWarehouseException();
+
+    var entityWarehouse = entityWarehouseOptional.get();
 
     if (Boolean.FALSE.equals(isCompatibleRack(entityWarehouse.getFamily(), entity.getType())))
       throw new NoCompatibleRackException();
 
-
-    entity.setWarehouse(entityWarehouse);
+    entity.setWarehouseId(entityWarehouse.getId());
 
     var entityPersisted = rackRepository.save(entity);
 
@@ -44,19 +49,27 @@ public class RackServiceImpl implements RackService {
   }
 
   @Override
-  public RackDTO update(Long id, RackUpdateDTO dto) throws NoCompatibleRackException {
-    var entity = rackRepository.getReferenceById(id);
-    entity.setType(dto.getType());
-    entity.setWarehouse(warehouseRepository.getReferenceById(id));
+  public RackDTO update(String id, RackUpdateDTO dto) throws NoCompatibleRackException {
+    var entityOptional = rackRepository.findById(id);
+    var entityWarehouseOptional = warehouseRepository.findById(dto.getWarehouseId());
 
-    if (Boolean.FALSE.equals(isCompatibleRack(entity.getWarehouse().getFamily(), entity.getType())))
+    if (!entityOptional.isPresent()) throw new NoFoundRackException();
+
+    if (!entityWarehouseOptional.isPresent()) throw new NoFoundWarehouseException();
+
+    var entity = entityOptional.get();
+    entity.setType(dto.getType());
+    entity.setWarehouseId(entityWarehouseOptional.get().getId());
+
+    if (Boolean.FALSE.equals(
+        isCompatibleRack(entityWarehouseOptional.get().getFamily(), entity.getType())))
       throw new NoCompatibleRackException();
 
     return mapper.entityToDto(rackRepository.save(entity));
   }
 
   @Override
-  public void delete(Long id) {
+  public void delete(String id) {
     rackRepository.deleteById(id);
   }
 

@@ -5,7 +5,9 @@ import com.example.demo.controller.dto.WarehouseDTO;
 import com.example.demo.controller.dto.WarehouseUpdateDTO;
 import com.example.demo.entity.RackEntity;
 import com.example.demo.entity.RackEntity.Type;
+import com.example.demo.exception.NoFoundWarehouseException;
 import com.example.demo.mapper.WarehouseMapper;
+import com.example.demo.repository.RackRepository;
 import com.example.demo.repository.WarehouseRepository;
 import com.example.demo.service.WarehouseService;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class WarehouseServiceImpl implements WarehouseService {
   private final WarehouseRepository warehouseRepository;
   private static final WarehouseMapper mapper = WarehouseMapper.INSTANCE;
+  private final RackRepository rackRepository;
 
   @Override
   public WarehouseDTO create(WarehouseCreateDTO dto) {
@@ -33,13 +36,21 @@ public class WarehouseServiceImpl implements WarehouseService {
   }
 
   @Override
-  public WarehouseDTO readById(Long id) {
-    return mapper.entityToDto(warehouseRepository.getReferenceById(id));
+  public WarehouseDTO readById(String id) {
+    var entityWarehouseOptional = warehouseRepository.findById(id);
+
+    if (!entityWarehouseOptional.isPresent()) throw new NoFoundWarehouseException();
+
+    return mapper.entityToDto(entityWarehouseOptional.get());
   }
 
   @Override
-  public WarehouseDTO update(Long id, WarehouseUpdateDTO dto) {
-    var entity = warehouseRepository.getReferenceById(id);
+  public WarehouseDTO update(String id, WarehouseUpdateDTO dto) {
+    var entityWarehouseOptional = warehouseRepository.findById(id);
+
+    if (!entityWarehouseOptional.isPresent()) throw new NoFoundWarehouseException();
+
+    var entity = entityWarehouseOptional.get();
     entity.setFamily(dto.getFamily());
     entity.setSize(dto.getSize());
     entity.setClient(dto.getClient());
@@ -48,17 +59,19 @@ public class WarehouseServiceImpl implements WarehouseService {
   }
 
   @Override
-  public void delete(Long id) {
+  public void delete(String id) {
     warehouseRepository.deleteById(id);
   }
 
   @Override
-  public List<List<String>> permutate(Long id) {
-    var types =
-        warehouseRepository.getReferenceById(id).getRacks().stream()
-            .map(RackEntity::getType)
-            .map(Type::toString)
-            .toList();
+  public List<List<String>> permutate(String id) {
+    var entityWarehouseOptional = warehouseRepository.findById(id);
+
+    if (!entityWarehouseOptional.isPresent()) throw new NoFoundWarehouseException();
+
+    var racks = rackRepository.findAllByWarehouseId(id);
+
+    var types = racks.stream().map(RackEntity::getType).map(Type::toString).toList();
 
     return permutate(types);
   }
@@ -84,5 +97,4 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     return result;
   }
-
 }

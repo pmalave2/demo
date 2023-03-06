@@ -37,25 +37,25 @@ public class WarehouseController {
 
   @CrossOrigin
   @GetMapping(path = "/{id}")
-  public WarehouseDTO readById(@PathVariable(required = true) Long id) {
+  public WarehouseDTO readById(@PathVariable(required = true) String id) {
     return service.readById(id);
   }
 
   @CrossOrigin
   @PutMapping(path = "/{id}")
   public WarehouseDTO update(
-      @PathVariable(required = true) Long id, @RequestBody @Validated WarehouseUpdateDTO dto) {
+      @PathVariable(required = true) String id, @RequestBody @Validated WarehouseUpdateDTO dto) {
     return service.update(id, dto);
   }
 
   @CrossOrigin
   @DeleteMapping(path = "/{id}")
-  public void delete(@PathVariable(required = true) Long id) {
+  public void delete(@PathVariable(required = true) String id) {
     service.delete(id);
   }
 
   @GetMapping(path = "/{id}/permutate")
-  public List<List<String>> permutate(@PathVariable(required = true) Long id) {
+  public List<List<String>> permutate(@PathVariable(required = true) String id) {
     return service.permutate(id);
   }
 }

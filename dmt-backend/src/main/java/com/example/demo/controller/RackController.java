@@ -39,13 +39,13 @@ public class RackController {
 
   @PutMapping(path = "/{id}")
   public RackDTO update(
-      @PathVariable(required = true) Long id, @RequestBody @Validated RackUpdateDTO dto)
+      @PathVariable(required = true) String id, @RequestBody @Validated RackUpdateDTO dto)
       throws NoCompatibleRackException {
     return service.update(id, dto);
   }
 
   @DeleteMapping(path = "/{id}")
-  public void delete(@PathVariable(required = true) Long id) {
+  public void delete(@PathVariable(required = true) String id) {
     service.delete(id);
   }
 }

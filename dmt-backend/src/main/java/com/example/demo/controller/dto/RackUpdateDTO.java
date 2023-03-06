@@ -19,5 +19,5 @@ public class RackUpdateDTO {
   private Type type;
 
   @NotNull
-  private Long warehouseId;
+  private String warehouseId;
 }

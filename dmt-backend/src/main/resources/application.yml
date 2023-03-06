@@ -4,16 +4,11 @@ server:
 spring:
   application:
     name: demo_dmt
-  datasource:
-    url: jdbc:h2:mem:mydb
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    open-in-view: true
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: create-drop
-  h2:
-    console.enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: test
+      username: root
+      password: example
+      authentication-database: admin
