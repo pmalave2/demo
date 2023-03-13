@@ -6,9 +6,4 @@ spring:
     name: demo_dmt
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: test
-      username: root
-      password: example
-      authentication-database: admin
+      uri: mongodb://test-sdba:oMe4kYU8fawDpESmnopc0F85DeuzDfpcnjczJItGTK8QDoi8BJwMav9K6VYIUt1lRO7GXXu21rQ5ACDbalIZdA==@test-sdba.mongo.cosmos.azure.com:10255/test-cdb?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@test-sdba@
